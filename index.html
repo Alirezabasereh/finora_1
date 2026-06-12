@@ -34,6 +34,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: inherit;
         }
 
         html {
@@ -55,6 +56,13 @@
             min-height: 100vh;
 
             overflow-x: hidden;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font-family: 'Vazirmatn', sans-serif;
         }
 
         /* =========================
@@ -476,7 +484,7 @@
         #weeklyChart {
 
             display: flex;
-            align-items: flex-end;
+            align-items: stretch;
 
             gap: 10px;
 
@@ -488,20 +496,114 @@
             flex: 1;
 
             display: flex;
-            align-items: flex-end;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+
+            height: 100%;
+
+            gap: 8px;
         }
 
-        .bar div {
+        .bar-fill-wrap {
+
+            flex: 1;
 
             width: 100%;
 
-            border-radius: 18px 18px 0 0;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .bar-fill-wrap div {
+
+            width: 100%;
+
+            min-height: 4px;
+
+            border-radius: 18px 18px 4px 4px;
 
             background:
                 linear-gradient(to top,
                     #00d2ff,
                     #6a5cff,
                     #ff3cac);
+
+            transition: height 0.4s ease;
+        }
+
+        .bar-label {
+
+            font-size: 12px;
+
+            opacity: 0.6;
+
+            white-space: nowrap;
+        }
+
+        .bar.is-today .bar-label {
+
+            opacity: 1;
+
+            font-weight: 700;
+
+            color: #00d2ff;
+        }
+
+        /* PIE LEGEND */
+
+        .pie-wrap {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 28px;
+
+            flex-wrap: wrap;
+        }
+
+        .pie-legend {
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 12px;
+        }
+
+        .legend-item {
+
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            font-size: 14px;
+        }
+
+        .legend-dot {
+
+            width: 12px;
+            height: 12px;
+
+            border-radius: 50%;
+
+            flex-shrink: 0;
+        }
+
+        .legend-item span.legend-amount {
+
+            opacity: 0.6;
+
+            margin-right: auto;
+
+            font-size: 13px;
+        }
+
+        body.light-mode .legend-item span.legend-amount {
+            opacity: 0.5;
         }
 
         .insight-card {
@@ -535,6 +637,127 @@
    BUDGET
 ========================= */
 
+        #budgetSummary {
+
+            margin-bottom: 22px;
+        }
+
+        .budget-summary-card {
+
+            padding: 24px;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .budget-summary-top {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-bottom: 18px;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .budget-summary-top p {
+            opacity: 0.7;
+            margin-bottom: 8px;
+        }
+
+        .budget-summary-top h1 {
+            font-size: 30px;
+            font-weight: 800;
+        }
+
+        .budget-summary-badge {
+
+            padding: 8px 16px;
+
+            border-radius: 30px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            white-space: nowrap;
+        }
+
+        .budget-summary-badge.status-ok {
+            color: #00ffbf;
+            background: rgba(0, 255, 170, 0.12);
+        }
+
+        .budget-summary-badge.status-warn {
+            color: #ffd166;
+            background: rgba(255, 209, 102, 0.12);
+        }
+
+        .budget-summary-badge.status-over {
+            color: #ff5d7d;
+            background: rgba(255, 60, 120, 0.12);
+        }
+
+        .budget-summary-progress {
+
+            width: 100%;
+            height: 16px;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            margin-bottom: 14px;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .budget-summary-progress-fill {
+
+            height: 100%;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(90deg,
+                    #00d2ff,
+                    #6a5cff,
+                    #ff3cac);
+
+            transition: width 0.4s ease;
+        }
+
+        .budget-summary-progress-fill.status-over {
+            background: linear-gradient(90deg, #ff3cac, #ff5d7d);
+        }
+
+        .budget-summary-foot {
+
+            display: flex;
+            justify-content: space-between;
+
+            font-size: 13px;
+
+            opacity: 0.7;
+
+            position: relative;
+            z-index: 2;
+        }
+
         #budgetContainer {
 
             display: grid;
@@ -547,15 +770,108 @@
             padding: 22px;
         }
 
-        .budget-info {
+        .budget-card-top {
+
+            display: flex;
+            align-items: center;
+
+            gap: 14px;
 
             margin-bottom: 16px;
+        }
+
+        .budget-icon {
+
+            width: 54px;
+            height: 54px;
+
+            flex-shrink: 0;
+
+            border-radius: 18px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 22px;
+
+            background:
+                rgba(106, 92, 255, 0.15);
+
+            color: #6a5cff;
+        }
+
+        .budget-card.over-limit .budget-icon {
+            background: rgba(255, 60, 120, 0.15);
+            color: #ff5d7d;
+        }
+
+        .budget-info {
+
+            flex: 1;
+
+            min-width: 0;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .budget-info-text h3 {
+            margin-bottom: 6px;
+            font-size: 16px;
+        }
+
+        .budget-info-text p {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .budget-percent {
+
+            font-size: 18px;
+            font-weight: 800;
+
+            flex-shrink: 0;
+        }
+
+        .budget-card.over-limit .budget-percent,
+        .budget-card.over-limit .budget-info-text p {
+            color: #ff5d7d;
+        }
+
+        .budget-edit-btn {
+
+            width: 38px;
+            height: 38px;
+
+            flex-shrink: 0;
+
+            border: none;
+            border-radius: 12px;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            color: white;
+
+            cursor: pointer;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        body.light-mode .budget-edit-btn {
+            color: #111827;
         }
 
         .budget-progress {
 
             width: 100%;
-            height: 14px;
+            height: 12px;
 
             border-radius: 20px;
 
@@ -563,6 +879,8 @@
 
             background:
                 rgba(255, 255, 255, 0.08);
+
+            margin-bottom: 14px;
         }
 
         .budget-progress-fill {
@@ -576,6 +894,44 @@
                     #00d2ff,
                     #6a5cff,
                     #ff3cac);
+
+            transition: width 0.4s ease;
+        }
+
+        .budget-card.over-limit .budget-progress-fill {
+            background: linear-gradient(90deg, #ff3cac, #ff5d7d);
+        }
+
+        .budget-card-foot {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .budget-remaining {
+
+            font-size: 13px;
+
+            opacity: 0.75;
+        }
+
+        .budget-card.over-limit .budget-remaining {
+            color: #ff5d7d;
+            opacity: 1;
+        }
+
+        .chart-empty {
+
+            text-align: center;
+
+            padding: 30px 10px;
+
+            opacity: 0.6;
+
+            font-size: 14px;
         }
 
         /* =========================
@@ -903,7 +1259,7 @@
             justify-content: center;
             align-items: flex-end;
 
-            padding: 18px;
+            padding: 0;
 
             z-index: 999;
         }
@@ -917,11 +1273,19 @@
 
             width: 100%;
 
+            max-width: 520px;
+
+            max-height: 90vh;
+
             padding: 24px;
 
             border-radius: 32px 32px 0 0;
 
             animation: modalShow 0.35s ease;
+
+            overflow-y: auto;
+
+            -webkit-overflow-scrolling: touch;
         }
 
         @keyframes modalShow {
@@ -1215,6 +1579,441 @@
 
             background: white;
         }
+
+        /* =========================
+   RESPONSIVE
+========================= */
+
+        @media (max-width: 480px) {
+
+            .app-shell {
+                padding: 16px 14px 130px;
+            }
+
+            .username {
+                font-size: 24px;
+            }
+
+            .balance-content h1 {
+                font-size: 30px;
+            }
+
+            .balance-card {
+                padding: 22px;
+            }
+
+            .stats-grid {
+                gap: 12px;
+            }
+
+            .stat-card {
+                padding: 16px;
+                gap: 10px;
+            }
+
+            .stat-icon {
+                width: 46px;
+                height: 46px;
+                font-size: 18px;
+            }
+
+            .stat-card h2 {
+                font-size: 18px;
+            }
+
+            .transactions-card,
+            .chart-card,
+            .weekly-card,
+            .ai-chat-box,
+            .profile-card,
+            .budget-card,
+            .budget-summary-card {
+                padding: 18px;
+            }
+
+            .page-header h2 {
+                font-size: 26px;
+            }
+
+            .budget-summary-top h1 {
+                font-size: 24px;
+            }
+
+            .budget-summary-badge {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            .pie-chart {
+                width: 180px;
+                height: 180px;
+            }
+
+            .pie-center {
+                width: 110px;
+                height: 110px;
+            }
+
+            .pie-center h2 {
+                font-size: 20px;
+            }
+
+            .pie-wrap {
+                gap: 18px;
+            }
+
+            #weeklyChart {
+                height: 180px;
+            }
+
+            .ai-orb {
+                width: 130px;
+                height: 130px;
+            }
+
+            .orb-core {
+                font-size: 36px;
+            }
+
+            .message-content {
+                max-width: 85%;
+                padding: 12px 14px;
+                font-size: 14px;
+            }
+
+            .bottom-nav {
+                width: 94%;
+                padding: 10px;
+            }
+
+            .nav-item span {
+                font-size: 11px;
+            }
+
+            .nav-item i {
+                font-size: 16px;
+            }
+
+            .floating-add-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 20px;
+                bottom: 88px;
+            }
+
+            .icon-btn {
+                width: 48px;
+                height: 48px;
+            }
+
+            .transaction-icon {
+                width: 46px;
+                height: 46px;
+                font-size: 17px;
+            }
+
+            .categories-grid {
+                gap: 10px;
+            }
+
+            .category-btn,
+            .type-btn {
+                padding: 12px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 360px) {
+
+            .app-shell {
+                padding: 14px 10px 130px;
+            }
+
+            .username {
+                font-size: 21px;
+            }
+
+            .hello-text {
+                font-size: 13px;
+            }
+
+            .balance-content h1 {
+                font-size: 24px;
+            }
+
+            .balance-card {
+                padding: 18px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 14px;
+            }
+
+            .transactions-card,
+            .chart-card,
+            .weekly-card,
+            .ai-chat-box,
+            .profile-card,
+            .budget-card,
+            .budget-summary-card {
+                padding: 14px;
+                border-radius: 22px;
+            }
+
+            .budget-summary-top h1 {
+                font-size: 22px;
+            }
+
+            .budget-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+            }
+
+            .budget-info-text h3 {
+                font-size: 14px;
+            }
+
+            .budget-info-text p {
+                font-size: 12px;
+            }
+
+            .budget-percent {
+                font-size: 15px;
+            }
+
+            .budget-remaining {
+                font-size: 11px;
+            }
+
+            .section-header h3 {
+                font-size: 15px;
+            }
+
+            .page-header h2 {
+                font-size: 22px;
+            }
+
+            .page-header p {
+                font-size: 13px;
+            }
+
+            .pie-chart {
+                width: 150px;
+                height: 150px;
+            }
+
+            .pie-center {
+                width: 95px;
+                height: 95px;
+            }
+
+            .pie-center h2 {
+                font-size: 17px;
+            }
+
+            .pie-center p {
+                font-size: 11px;
+            }
+
+            .pie-wrap {
+                gap: 12px;
+                flex-direction: column;
+            }
+
+            .legend-item {
+                font-size: 12px;
+            }
+
+            #weeklyChart {
+                height: 150px;
+                gap: 6px;
+            }
+
+            .bar-label {
+                font-size: 10px;
+            }
+
+            .ai-orb {
+                width: 100px;
+                height: 100px;
+            }
+
+            .orb-core {
+                font-size: 28px;
+            }
+
+            .ai-orb-wrapper {
+                margin: 20px 0;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            .category-btn {
+                padding: 10px 8px;
+                font-size: 12.5px;
+            }
+
+            .type-btn {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            .input-group input,
+            .input-group textarea {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            .transaction-modal {
+                padding: 18px;
+                max-height: 92vh;
+            }
+
+            .input-group {
+                margin-bottom: 14px;
+            }
+
+            .input-group label {
+                margin-bottom: 6px;
+                font-size: 13px;
+            }
+
+            .type-switch {
+                margin-bottom: 14px;
+            }
+
+            .section-header {
+                margin-bottom: 14px;
+            }
+
+            .input-group textarea {
+                min-height: 80px;
+            }
+
+            .save-transaction-btn {
+                padding: 14px;
+                font-size: 14px;
+            }
+
+            .transaction-item {
+                padding: 12px;
+            }
+
+            .transaction-right h3 {
+                font-size: 14px;
+            }
+
+            .transaction-left h4 {
+                font-size: 14px;
+            }
+
+            .transaction-left p {
+                font-size: 12px;
+            }
+
+            .floating-add-btn {
+                width: 54px;
+                height: 54px;
+                font-size: 18px;
+                bottom: 84px;
+            }
+
+            .bottom-nav {
+                width: 96%;
+                padding: 8px;
+                bottom: 12px;
+            }
+
+            .nav-item {
+                gap: 5px;
+            }
+
+            .nav-item span {
+                font-size: 10px;
+            }
+
+            .nav-item i {
+                font-size: 15px;
+            }
+
+            .ai-input-container {
+                padding: 10px;
+            }
+
+            .ai-input-container input {
+                font-size: 14px;
+            }
+
+            .insight-card {
+                padding: 14px;
+                gap: 10px;
+            }
+
+            .insight-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 16px;
+            }
+
+            .profile-card img {
+                width: 90px;
+                height: 90px;
+            }
+
+            .setting-item {
+                padding: 14px;
+            }
+
+            .setting-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 15px;
+            }
+
+            .switch {
+                width: 50px;
+                height: 28px;
+            }
+
+            .slider::before {
+                width: 20px;
+                height: 20px;
+            }
+
+            .switch input:checked + .slider::before {
+                transform: translateX(22px);
+            }
+        }
+
+        @media (max-width: 320px) {
+
+            .stat-card h2 {
+                font-size: 16px;
+            }
+
+            .balance-content h1 {
+                font-size: 21px;
+            }
+
+            .pie-chart {
+                width: 130px;
+                height: 130px;
+            }
+
+            .pie-center {
+                width: 82px;
+                height: 82px;
+            }
+        }
     </style>
 
 </head>
@@ -1242,7 +2041,7 @@
                     </p>
 
                     <h2 class="username">
-                        user
+                        $user$
                     </h2>
 
                 </div>
@@ -1358,7 +2157,7 @@
                 <h2>تحلیل مالی</h2>
 
                 <p>
-                    تحلیل هوشمند هزینه‌ها
+                    تحلیل هوشمند هزینه
                 </p>
 
             </div>
@@ -1370,7 +2169,7 @@
                 <div class="section-header">
 
                     <h3>
-                        دسته‌بندی هزینه‌ها
+                        دسته بندی هزینه
                     </h3>
 
                     <span>
@@ -1425,11 +2224,17 @@
 
             <div class="page-header">
 
-                <h2>بودجه‌بندی</h2>
+                <h2>بودجه بندی</h2>
 
                 <p>
-                    مدیریت سقف هزینه‌ها
+                    مدیریت سقف هزینه
                 </p>
+
+            </div>
+
+            <div id="budgetSummary">
+
+                <!-- RENDER -->
 
             </div>
 
@@ -1449,7 +2254,7 @@
 
             <div class="page-header">
 
-                <h2>Finora AI</h2>
+                <h2>دستیار مالی فینورا</h2>
 
                 <p>
                     دستیار هوشمند مالی
@@ -1517,10 +2322,10 @@
 
                 <img src="https://i.pravatar.cc/300" alt="" />
 
-                <h2>user</h2>
+                <h2>$user$</h2>
 
                 <p>
-                    Premium Member
+                    اطلاعات کاربری
                 </p>
 
             </section>
@@ -1664,7 +2469,7 @@
                 <div class="input-group">
 
                     <label>
-                        دسته‌بندی
+                        دسته بندی
                     </label>
 
                     <div class="categories-grid">
@@ -1726,6 +2531,48 @@
                 <button class="save-transaction-btn" id="saveTransactionBtn">
 
                     ذخیره تراکنش
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- =========================
+         EDIT BUDGET MODAL
+    ========================== -->
+
+        <div class="modal-overlay" id="budgetModal">
+
+            <div class="glass transaction-modal">
+
+                <div class="section-header">
+
+                    <h3 id="budgetModalTitle">
+                        ویرایش بودجه
+                    </h3>
+
+                    <button class="glass small-btn" id="closeBudgetModalBtn">
+
+                        <i class="fa-solid fa-xmark"></i>
+
+                    </button>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>
+                        سقف بودجه (تومان)
+                    </label>
+
+                    <input type="number" id="budgetLimitInput" placeholder="مثلاً 5000000" />
+
+                </div>
+
+                <button class="save-transaction-btn" id="saveBudgetBtn">
+
+                    ذخیره بودجه
 
                 </button>
 
@@ -1823,7 +2670,23 @@
 
             transactions: JSON.parse(
                 localStorage.getItem('transactions')
-            ) || []
+            ) || [],
+
+            budgets: JSON.parse(
+                localStorage.getItem('budgets')
+            ) || {
+
+                food: 10000000,
+
+                transport: 5000000,
+
+                shopping: 7000000,
+
+                fun: 4000000,
+
+                other: 3000000
+
+            }
 
         };
 
@@ -1934,10 +2797,30 @@
 
         /* BUDGET */
 
+        const budgetSummary =
+            document.getElementById(
+                'budgetSummary'
+            );
+
         const budgetContainer =
             document.getElementById(
                 'budgetContainer'
             );
+
+        const budgetModal =
+            document.getElementById('budgetModal');
+
+        const closeBudgetModalBtn =
+            document.getElementById('closeBudgetModalBtn');
+
+        const saveBudgetBtn =
+            document.getElementById('saveBudgetBtn');
+
+        const budgetLimitInput =
+            document.getElementById('budgetLimitInput');
+
+        const budgetModalTitle =
+            document.getElementById('budgetModalTitle');
 
         /* =========================
            APP VARIABLES
@@ -1946,6 +2829,8 @@
         let currentType = 'expense';
 
         let currentCategory = 'food';
+
+        let currentEditingBudget = null;
 
         /* =========================
            INIT
@@ -1970,6 +2855,8 @@
             setupThemeToggle();
 
             setupAI();
+
+            setupBudgetModal();
 
         }
 
@@ -2214,6 +3101,99 @@
                     state.transactions
                 )
             );
+
+        }
+
+        function persistBudgets() {
+
+            localStorage.setItem(
+                'budgets',
+                JSON.stringify(
+                    state.budgets
+                )
+            );
+
+        }
+
+        /* =========================
+           BUDGET MODAL
+        ========================= */
+
+        function setupBudgetModal() {
+
+            closeBudgetModalBtn.addEventListener(
+                'click',
+                closeBudgetModal
+            );
+
+            budgetModal.addEventListener(
+                'click',
+                (e) => {
+
+                    if (e.target === budgetModal) {
+
+                        closeBudgetModal();
+
+                    }
+
+                }
+            );
+
+            saveBudgetBtn.addEventListener(
+                'click',
+                saveBudgetLimit
+            );
+
+        }
+
+        function openBudgetModal(category) {
+
+            currentEditingBudget = category;
+
+            budgetModalTitle.innerHTML =
+                `ویرایش بودجه ${translateCategory(category)}`;
+
+            budgetLimitInput.value =
+                state.budgets[category] || '';
+
+            budgetModal.classList.add('active-modal');
+
+            budgetLimitInput.focus();
+
+        }
+
+        function closeBudgetModal() {
+
+            budgetModal.classList.remove('active-modal');
+
+            currentEditingBudget = null;
+
+            budgetLimitInput.value = '';
+
+        }
+
+        function saveBudgetLimit() {
+
+            const value =
+                Number(budgetLimitInput.value);
+
+            if (!value || value <= 0) {
+
+                alert('یک سقف معتبر وارد کن');
+
+                return;
+
+            }
+
+            if (!currentEditingBudget) return;
+
+            state.budgets[currentEditingBudget] = value;
+
+            persistBudgets();
+
+            renderBudgets();
+
+            closeBudgetModal();
 
         }
 
@@ -2476,29 +3456,103 @@
 
             /* PIE */
 
-            analyticsPieChart.innerHTML =
+            const CATEGORY_COLORS = {
 
-                `
-    <div class="pie-chart">
+                food: '#6a5cff',
 
-      <div class="pie-center">
+                transport: '#00d2ff',
 
-        <h2>
-          ${
-            totalExpenses > 0
-            ? '100%'
-            : '0%'
-          }
-        </h2>
+                shopping: '#ff3cac',
 
-        <p>
-          هزینه‌ها
-        </p>
+                fun: '#00ffbf',
 
+                other: '#ffb86c'
+
+            };
+
+            if (totalExpenses > 0) {
+
+                let gradientParts = [];
+
+                let legendParts = [];
+
+                let cursor = 0;
+
+                Object.keys(categoryTotals).forEach(
+                    (category) => {
+
+                        const amount =
+                            categoryTotals[category];
+
+                        if (amount <= 0) return;
+
+                        const percent =
+                            (amount / totalExpenses) * 100;
+
+                        const color =
+                            CATEGORY_COLORS[category] ||
+                            '#888';
+
+                        const start = cursor;
+
+                        const end = cursor + percent;
+
+                        gradientParts.push(
+                            `${color} ${start}% ${end}%`
+                        );
+
+                        legendParts.push(`
+            <div class="legend-item">
+              <span class="legend-dot" style="background:${color}"></span>
+              <span>${translateCategory(category)}</span>
+              <span class="legend-amount">${toPersianDigits(Math.round(percent))}٪</span>
+            </div>
+          `);
+
+                        cursor = end;
+
+                    }
+                );
+
+                analyticsPieChart.innerHTML =
+
+                    `
+    <div class="pie-wrap">
+
+      <div class="pie-chart" style="background: conic-gradient(${gradientParts.join(', ')})">
+
+        <div class="pie-center">
+
+          <h2>
+            ${formatMoney(totalExpenses)}
+          </h2>
+
+          <p>
+            تومان
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="pie-legend">
+        ${legendParts.join('')}
       </div>
 
     </div>
   `;
+
+            } else {
+
+                analyticsPieChart.innerHTML =
+
+                    `
+    <div class="chart-empty">
+      هنوز هزینه‌ای ثبت نشده تا تحلیل شود.
+    </div>
+  `;
+
+            }
 
             /* INSIGHT */
 
@@ -2562,42 +3616,102 @@
             transactions
         ) {
 
-            const days = [0, 0, 0, 0, 0, 0, 0];
+            const dayNames =
+                ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
+
+            const now = new Date();
+
+            /* PERSIAN WEEK: SATURDAY (6) -> FRIDAY (5) */
+
+            const todayIndex = now.getDay();
+
+            const daysSinceSaturday =
+                (todayIndex - 6 + 7) % 7;
+
+            const days = [];
+
+            for (let i = 0; i < 7; i++) {
+
+                const date = new Date(now);
+
+                date.setDate(
+                    now.getDate() -
+                    daysSinceSaturday +
+                    i
+                );
+
+                days.push({
+                    date,
+                    total: 0,
+                    isToday:
+                        date.toDateString() ===
+                        now.toDateString()
+                });
+
+            }
 
             transactions.forEach((t) => {
 
-                const day =
-                    new Date(
-                        t.createdAt
-                    ).getDay();
+                const txDate = new Date(t.createdAt);
 
-                days[day] += t.amount;
+                days.forEach((day) => {
+
+                    if (
+                        txDate.toDateString() ===
+                        day.date.toDateString()
+                    ) {
+
+                        day.total += t.amount;
+
+                    }
+
+                });
 
             });
 
+            const totalWeek =
+                days.reduce((acc, d) => acc + d.total, 0);
+
+            if (totalWeek === 0) {
+
+                weeklyChart.innerHTML =
+
+                    `<div class="chart-empty">
+            هزینه‌ای در این هفته ثبت نشده.
+          </div>`;
+
+                return;
+
+            }
+
+            const max =
+                Math.max(...days.map((d) => d.total), 1);
+
             weeklyChart.innerHTML = '';
 
-            days.forEach((amount) => {
+            days.forEach((day, index) => {
 
                 const bar =
                     document.createElement('div');
 
                 bar.classList.add('bar');
 
-                const max =
-                    Math.max(...days, 1);
+                if (day.isToday) {
+
+                    bar.classList.add('is-today');
+
+                }
 
                 const height =
-                    (amount / max) * 100;
+                    (day.total / max) * 100;
 
                 bar.innerHTML =
 
                     `
-      <div
-        style="
-          height:${height}%
-        "
-      ></div>
+      <div class="bar-fill-wrap">
+        <div style="height:${height}%"></div>
+      </div>
+      <span class="bar-label">${dayNames[index]}</span>
     `;
 
                 weeklyChart.appendChild(bar);
@@ -2612,17 +3726,27 @@
 
         function renderBudgets() {
 
-            const budgets = {
+            const budgets = state.budgets;
 
-                food: 10000000,
+            const CATEGORY_ICONS = {
 
-                transport: 5000000,
+                food: 'fa-burger',
 
-                shopping: 7000000,
+                transport: 'fa-car',
 
-                fun: 4000000
+                shopping: 'fa-bag-shopping',
+
+                fun: 'fa-gamepad',
+
+                other: 'fa-gift'
 
             };
+
+            let totalSpent = 0;
+
+            let totalLimit = 0;
+
+            /* CATEGORY CARDS */
 
             budgetContainer.innerHTML = '';
 
@@ -2648,11 +3772,20 @@
                     const limit =
                         budgets[category];
 
+                    totalSpent += spent;
+
+                    totalLimit += limit;
+
                     const percent =
                         Math.min(
                             (spent / limit) * 100,
                             100
                         );
+
+                    const isOver = spent > limit;
+
+                    const remaining =
+                        limit - spent;
 
                     const card =
                         document.createElement('div');
@@ -2662,25 +3795,49 @@
                         'budget-card'
                     );
 
+                    if (isOver) {
+
+                        card.classList.add('over-limit');
+
+                    }
+
                     card.innerHTML =
 
                         `
-        <div class="budget-info">
+        <div class="budget-card-top">
 
-          <h3>
-            ${translateCategory(
-              category
-            )}
-          </h3>
+          <div class="budget-icon">
 
-          <p>
+            <i class="fa-solid ${CATEGORY_ICONS[category] || 'fa-circle'}"></i>
 
-            ${formatMoney(spent)}
-            /
+          </div>
 
-            ${formatMoney(limit)}
+          <div class="budget-info">
 
-          </p>
+            <div class="budget-info-text">
+
+              <h3>
+                ${translateCategory(
+                  category
+                )}
+              </h3>
+
+              <p>
+
+                ${formatMoney(spent)}
+                از
+                ${formatMoney(limit)}
+                تومان
+
+              </p>
+
+            </div>
+
+            <div class="budget-percent">
+              ${toPersianDigits(Math.round(percent))}٪
+            </div>
+
+          </div>
 
         </div>
 
@@ -2695,13 +3852,126 @@
 
         </div>
 
+        <div class="budget-card-foot">
+
+          <span class="budget-remaining">
+
+            ${
+              isOver
+              ? `${formatMoney(Math.abs(remaining))} تومان بیش از سقف`
+              : `${formatMoney(remaining)} تومان باقی مانده`
+            }
+
+          </span>
+
+          <button class="budget-edit-btn" data-category="${category}">
+
+            <i class="fa-solid fa-pen"></i>
+
+          </button>
+
+        </div>
+
       `;
 
                     budgetContainer.appendChild(
                         card
                     );
 
+                }
+            );
+
+            budgetContainer
+                .querySelectorAll('.budget-edit-btn')
+                .forEach((btn) => {
+
+                    btn.addEventListener('click', () => {
+
+                        openBudgetModal(btn.dataset.category);
+
+                    });
+
                 });
+
+            /* SUMMARY */
+
+            const overallPercent =
+                totalLimit > 0
+                ? Math.min((totalSpent / totalLimit) * 100, 100)
+                : 0;
+
+            const isOverall =
+                totalSpent > totalLimit;
+
+            let statusClass = 'status-ok';
+
+            let statusText = 'وضعیت خوب';
+
+            if (isOverall) {
+
+                statusClass = 'status-over';
+
+                statusText = 'بیش از سقف';
+
+            } else if (overallPercent >= 80) {
+
+                statusClass = 'status-warn';
+
+                statusText = 'نزدیک به سقف';
+
+            }
+
+            budgetSummary.innerHTML =
+
+                `
+    <div class="glass budget-summary-card">
+
+      <div class="budget-summary-top">
+
+        <div>
+
+          <p>مجموع هزینه از کل بودجه</p>
+
+          <h1>
+            ${formatMoney(totalSpent)}
+            <span style="font-size:16px; opacity:0.6;">
+              / ${formatMoney(totalLimit)}
+            </span>
+          </h1>
+
+        </div>
+
+        <span class="budget-summary-badge ${statusClass}">
+          ${statusText}
+        </span>
+
+      </div>
+
+      <div class="budget-summary-progress">
+
+        <div
+          class="budget-summary-progress-fill ${isOverall ? 'status-over' : ''}"
+          style="width:${overallPercent}%"
+        ></div>
+
+      </div>
+
+      <div class="budget-summary-foot">
+
+        <span>${toPersianDigits(Math.round(overallPercent))}٪ استفاده شده</span>
+
+        <span>
+          ${
+            isOverall
+            ? `${formatMoney(totalSpent - totalLimit)} تومان اضافه`
+            : `${formatMoney(totalLimit - totalSpent)} تومان باقی مانده`
+          }
+        </span>
+
+      </div>
+
+    </div>
+  `;
 
         }
 
@@ -2727,7 +3997,7 @@
       <div class="message-content">
 
         <h4>
-          Finora AI
+          دستیار مالی فینورا
         </h4>
 
         <p>
@@ -2819,12 +4089,12 @@
       <div class="message-content">
 
         <h4>
-          Finora AI
+          دستیار مالی فینورا
         </h4>
 
         <p>
 
-          در حال بروزرسانی...
+          سلام $user$ جان،فعلا نمیتونم به پیام ها جواب بدم، اما به زودی میتونیم اینجا صحبت کنیم😁
 
         </p>
 
@@ -2903,6 +4173,16 @@
 
             return Number(number)
                 .toLocaleString('fa-IR');
+
+        }
+
+        function toPersianDigits(number) {
+
+            return String(number).replace(
+                /\d/g,
+                (digit) =>
+                    '۰۱۲۳۴۵۶۷۸۹'[digit]
+            );
 
         }
 
